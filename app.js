@@ -38,9 +38,9 @@ var chaincode 	= null;
 
 
 // Set chaincode source repository
-var chaincode_zip_url 		= "https://github.com/apiBlockchain/GscLabChaincode/archive/master.zip";
-var chaincode_unzip_dir 	= "GscLabChaincode-master";
-var chaincode_git_url 		= "https://github.com/apiBlockchain/GscLabChaincode";
+var chaincode_zip_url 		= "https://github.com/apiBlockchain/BlockchainExampleCode/archive/master.zip";
+var chaincode_unzip_dir 	= "BlockchainExampleCode-master";
+var chaincode_git_url 		= "https://github.com/apiBlockchain/BlockchainExampleCode";
 
 ////// Pathing and Module Setup ////////
 app.set('views', path.join(__dirname, 'views'));
@@ -159,6 +159,8 @@ app.get('/getAllContracts', function(req, res) {
 });
 
 
+
+
 // Transfer points in between members of the open points network
 app.get('/transferPoints', function(req, res) {
 
@@ -218,6 +220,18 @@ app.get('/getCustomerPoints', function(req, res) {
 
 });
 
+// Get a single participant's account information
+app.get('/getBusiness', function(req, res) {
+
+	var businessId = url.parse(req.url, true).query.businessId;
+
+	console.log('user: ', businessId);
+
+	chaincode.query.getBusiness([ 'getBusiness', businessId ], function(e,data) {
+		cb_received_response(e, data, res);
+	});
+
+});
 
 // Get a single participant's transaction history
 app.get('/getUserTransactions', function(req, res) {
